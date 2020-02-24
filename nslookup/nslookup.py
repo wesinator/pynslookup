@@ -10,7 +10,7 @@ def base_lookup(domain, record_type, dns_servers=["1.1.1.1", "1.0.0.1"]):
 
     # set DNS server for lookup
     dns_resolver = dns.resolver.Resolver()
-    dns_resolver.nameservers = self.dns_servers
+    dns_resolver.nameservers = dns_servers
 
     try:
         # get the dns resolutions for this domain
