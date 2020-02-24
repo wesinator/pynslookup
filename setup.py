@@ -19,7 +19,7 @@ setup(name='nslookup',
       author='wesinator',
       keywords='dns',
       packages=find_packages(exclude=(["tests", "docs"])),
-      install_requires=requirements
+      install_requires=requirements,
       classifiers=[
         'Intended Audience :: Developers',
         'License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)',
