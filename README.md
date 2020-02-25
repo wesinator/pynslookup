@@ -1,4 +1,6 @@
-# soaparse
+# PyNslookup
+[![PyPi package](https://img.shields.io/pypi/v/nslookup.svg)](https://pypi.python.org/pypi/nslookup)
+
 Sensible high-level DNS lookups in Python, using dnspython dns.resolver, code adopted from [XN-Twist](https://github.com/xn-twist/xn-twist/pull/31/files)
 
 The main purpose and uses of this library:
