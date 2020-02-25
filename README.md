@@ -5,7 +5,9 @@ The main purpose and uses of this library:
  - `A` record lookups (typical DNS queries)
  - SOA lookups
 
-A list of raw response string(s) is returned.
+Returns an object containing two arrays:
+ - `response_full`: the full DNS response string(s)
+ - `answer`: the parsed DNS answer (list of IPs or SOA string)
 
 #### Usage
 ```python
