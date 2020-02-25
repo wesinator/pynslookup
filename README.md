@@ -9,13 +9,16 @@ A list of raw response string(s) is returned.
 
 #### Usage
 ```python
-import nslookup
+from nslookup import Nslookup
 
 domain = "example.com"
 
 # DNS servers default to cloudflare public DNS
-ips_record = nslookup.dns_lookup(domain)
+dns_query = Nslookup(dns_servers=["10.1.1.1"])
 
-soa_record = nslookup.soa_lookup(domain, dns_servers=["10.1.1.1"])
+ips_record = dns_query.dns_lookup(domain)
+print(ips_record.response_full, ips_record.answer)
 
+soa_record = dns_query.soa_lookup(domain)
+print(soa_record.response_full, soa_record.answer)
 ```

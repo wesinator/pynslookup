@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from .nslookup import base_lookup, dns_lookup, soa_lookup
+from .nslookup import DNSresponse, Nslookup
 
 __author__ = 'wesinator'
-__version__ = '0.1.0'
+__version__ = '0.5.0'
