@@ -46,13 +46,17 @@ class Nslookup:
 
     def dns_lookup(self, domain):
         dns_answer = self.base_lookup(domain, "A")
-        dns_response = [answer.to_text() for answer in dns_answer.response.answer]
-        ips = [ip.address for ip in dns_answer]
-        return DNSresponse(dns_response, ips)
+        if dns_answer:
+            dns_response = [answer.to_text() for answer in dns_answer.response.answer]
+            ips = [ip.address for ip in dns_answer]
+            return DNSresponse(dns_response, ips)
+        return DNSresponse()
 
 
     def soa_lookup(self, domain):
         soa_answer = self.base_lookup(domain, "SOA")
-        soa_response = [answer.to_text() for answer in soa_answer.response.answer]
-        soa = [next(answer.__iter__()).to_text() for answer in soa_answer.response.answer]
-        return DNSresponse(soa_response, soa)
+        if soa_answer:
+            soa_response = [answer.to_text() for answer in soa_answer.response.answer]
+            soa = [next(answer.__iter__()).to_text() for answer in soa_answer.response.answer]
+            return DNSresponse(soa_response, soa)
+        return DNSresponse()
