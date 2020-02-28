@@ -36,7 +36,7 @@ class Nslookup:
             pass
         except dns.resolver.NoAnswer as e:
             # the resolver is not answering so dns resolutions remain empty
-            print("the DNS servers %s did not answer" % dns_servers, e)
+            print("the DNS servers {} did not answer".format(dns_resolver.nameservers), e)
         except dns.resolver.NoNameservers as e:
             # the resolver is not answering so dns resolutions remain empty
             print("the nameservers did not answer", e)
