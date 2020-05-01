@@ -11,10 +11,7 @@ class DNSresponse:
         self.answer = answer
 
 class Nslookup:
-    """Object for DNS lookup init with DNS servers"""
-    cloudflare_dns = ["1.1.1.1", "1.0.0.1"]
-
-
+    """Object for DNS resolver, init with optional specific DNS servers"""
     def __init__(self, dns_servers=[]):
         self.dns_resolver = dns.resolver.Resolver()
 
@@ -35,10 +32,8 @@ class Nslookup:
             # the domain does not exist so dns resolutions remain empty
             pass
         except dns.resolver.NoAnswer as e:
-            # the resolver is not answering so dns resolutions remain empty
             print("the DNS servers {} did not answer:".format(self.dns_resolver.nameservers), e)
         except dns.resolver.NoNameservers as e:
-            # the resolver is not answering so dns resolutions remain empty
             print("the nameservers did not answer:", e)
         except dns.exception.DNSException as e:
             print("DNS resolving error occurred:", e)
