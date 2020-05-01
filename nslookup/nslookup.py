@@ -15,8 +15,11 @@ class Nslookup:
     cloudflare_dns = ["1.1.1.1", "1.0.0.1"]
 
 
-    def __init__(self, dns_servers=cloudflare_dns):
-        self.dns_servers = dns_servers
+    def __init__(self, dns_servers=[]):
+        self.dns_resolver = dns.resolver.Resolver()
+
+        if dns_servers:
+            self.dns_resolver.nameservers = dns_servers
 
 
     def base_lookup(self, domain, record_type):
@@ -24,19 +27,16 @@ class Nslookup:
         https://github.com/xn-twist/xn-twist/pull/31/files
         """
         # set DNS server for lookup
-        dns_resolver = dns.resolver.Resolver()
-        dns_resolver.nameservers = self.dns_servers
-
         try:
             # get the dns resolutions for this domain
-            answer = dns_resolver.query(domain, record_type)
+            answer = self.dns_resolver.query(domain, record_type)
             return answer
         except dns.resolver.NXDOMAIN:
             # the domain does not exist so dns resolutions remain empty
             pass
         except dns.resolver.NoAnswer as e:
             # the resolver is not answering so dns resolutions remain empty
-            print("the DNS servers {} did not answer".format(dns_resolver.nameservers), e)
+            print("the DNS servers {} did not answer".format(self.dns_resolver.nameservers), e)
         except dns.resolver.NoNameservers as e:
             # the resolver is not answering so dns resolutions remain empty
             print("the nameservers did not answer", e)

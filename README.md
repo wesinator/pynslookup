@@ -17,8 +17,8 @@ from nslookup import Nslookup
 
 domain = "example.com"
 
-# DNS servers default to cloudflare public DNS
-dns_query = Nslookup(dns_servers=["10.1.1.1"])
+# set optional Cloudflare public DNS server
+dns_query = Nslookup(dns_servers=["1.1.1.1"])
 
 ips_record = dns_query.dns_lookup(domain)
 print(ips_record.response_full, ips_record.answer)
