@@ -36,12 +36,12 @@ class Nslookup:
             pass
         except dns.resolver.NoAnswer as e:
             # the resolver is not answering so dns resolutions remain empty
-            print("the DNS servers {} did not answer".format(self.dns_resolver.nameservers), e)
+            print("the DNS servers {} did not answer:".format(self.dns_resolver.nameservers), e)
         except dns.resolver.NoNameservers as e:
             # the resolver is not answering so dns resolutions remain empty
-            print("the nameservers did not answer", e)
+            print("the nameservers did not answer:", e)
         except dns.exception.DNSException as e:
-            print("DNS resolving error occurred", e)
+            print("DNS resolving error occurred:", e)
 
 
     def dns_lookup(self, domain):
