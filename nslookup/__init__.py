@@ -4,4 +4,4 @@
 from .nslookup import DNSresponse, Nslookup
 
 __author__ = 'wesinator'
-__version__ = '1.1.0'
+__version__ = '1.1.1'
