@@ -32,21 +32,36 @@ class Nslookup:
             # the domain does not exist so dns resolutions remain empty
             pass
         except dns.resolver.NoAnswer as e:
-            print("Warning: the DNS servers {} did not answer:".format(",".join(self.dns_resolver.nameservers)), e)
+            # domains existing but not having AAAA records is common
+            if record_type != 'AAAA':
+                print("Warning: the DNS servers {} did not answer:".format(",".join(self.dns_resolver.nameservers)), e)
         except dns.resolver.NoNameservers as e:
             print("Warning: the nameservers did not answer:", e)
         except dns.exception.DNSException as e:
             print("Error: DNS exception occurred:", e)
 
+    def base_dns_lookup(self, domain, record_type):
+        if record_type in ['A','AAAA']:
+            dns_answer = self.base_lookup(domain, record_type)
+            if dns_answer:
+                dns_response = [answer.to_text() for answer in dns_answer.response.answer]
+                ips = [ip.address for ip in dns_answer]
+                return DNSresponse(dns_response, ips)
+        else:
+            raise ValueError("Expected record_type 'A' or 'AAAA'")
 
-    def dns_lookup(self, domain):
-        dns_answer = self.base_lookup(domain, "A")
-        if dns_answer:
-            dns_response = [answer.to_text() for answer in dns_answer.response.answer]
-            ips = [ip.address for ip in dns_answer]
-            return DNSresponse(dns_response, ips)
         return DNSresponse()
 
+    def dns_lookup(self, domain):
+        return self.base_dns_lookup(domain,"A")
+
+    def dns_lookup6(self, domain):
+        return self.base_dns_lookup(domain, "AAAA")
+
+    def dns_lookup_all(self, domain):
+        resp_a = self.base_dns_lookup(domain,"A")
+        resp_aaaa = self.base_dns_lookup(domain,"AAAA")
+        return DNSresponse([*resp_a.response_full,*resp_aaaa.response_full],[*resp_a.answer,*resp_aaaa.answer])
 
     def soa_lookup(self, domain):
         soa_answer = self.base_lookup(domain, "SOA")
