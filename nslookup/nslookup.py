@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-import sys
 
+import sys
 import dns.resolver, dns.exception
 
 stderr = sys.stderr
 
-class DNSresponse:
+
+class DNSresponse(object):
     """data object for DNS answer
     response_full - full DNS response raw
     answer - DNS answer to the query
@@ -14,11 +15,12 @@ class DNSresponse:
         self.response_full = response_full
         self.answer = answer
 
-class Nslookup:
-    """Object for DNS resolver, init with optional specific DNS servers"""
-    def __init__(self, dns_servers=[]):
-        self.dns_resolver = dns.resolver.Resolver()
 
+class Nslookup(object):
+    """Object for DNS resolver, init with optional specific DNS servers"""
+    def __init__(self, dns_servers=[], verbose=True):
+        self.dns_resolver = dns.resolver.Resolver()
+        self.verbose = verbose
         if dns_servers:
             self.dns_resolver.nameservers = dns_servers
 
@@ -40,10 +42,11 @@ class Nslookup:
             if record_type != 'AAAA':
                 print("Warning:", e, file=stderr)
         except dns.resolver.NoNameservers as e:
-            print("Warning:", e, file=stderr)
+            if self.verbose:
+                print("Warning:", e, file=stderr)
         except dns.exception.DNSException as e:
-            print("Error: DNS exception occurred:", e, file=stderr)
-
+            if self.verbose:
+                print("Error: DNS exception occurred:", e, file=stderr)
 
     def base_dns_lookup(self, domain, record_type):
         if record_type in ['A','AAAA']:
@@ -57,20 +60,16 @@ class Nslookup:
 
         return DNSresponse()
 
-
     def dns_lookup(self, domain):
         return self.base_dns_lookup(domain,"A")
 
-
     def dns_lookup6(self, domain):
         return self.base_dns_lookup(domain, "AAAA")
-
 
     def dns_lookup_all(self, domain):
         resp_a = self.base_dns_lookup(domain,"A")
         resp_aaaa = self.base_dns_lookup(domain,"AAAA")
         return DNSresponse([*resp_a.response_full,*resp_aaaa.response_full],[*resp_a.answer,*resp_aaaa.answer])
-
 
     def soa_lookup(self, domain):
         soa_answer = self.base_lookup(domain, "SOA")
