@@ -6,7 +6,7 @@ import dns.resolver, dns.exception
 stderr = sys.stderr
 
 
-class DNSresponse(object):
+class DNSresponse:
     """data object for DNS answer
     response_full - full DNS response raw
     answer - DNS answer to the query
@@ -16,7 +16,7 @@ class DNSresponse(object):
         self.answer = answer
 
 
-class Nslookup(object):
+class Nslookup:
     """Object for DNS resolver, init with optional specific DNS servers"""
     def __init__(self, dns_servers=[], verbose=True):
         self.dns_resolver = dns.resolver.Resolver()
