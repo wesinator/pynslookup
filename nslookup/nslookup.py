@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
-
 import sys
-import dns.resolver, dns.exception
 
-stderr = sys.stderr
+import dns.resolver, dns.exception
 
 
 class DNSresponse:
@@ -40,13 +38,14 @@ class Nslookup:
         except dns.resolver.NoAnswer as e:
             # domains existing but not having AAAA records is common
             if record_type != 'AAAA':
-                print("Warning:", e, file=stderr)
+                print("Warning:", e, file=sys.stderr)
         except dns.resolver.NoNameservers as e:
             if self.verbose:
-                print("Warning:", e, file=stderr)
+                print("Warning:", e, file=sys.stderr)
         except dns.exception.DNSException as e:
             if self.verbose:
-                print("Error: DNS exception occurred:", e, file=stderr)
+                print("Error: DNS exception occurred:", e, file=sys.stderr)
+
 
     def base_dns_lookup(self, domain, record_type):
         if record_type in ['A','AAAA']:
@@ -60,16 +59,20 @@ class Nslookup:
 
         return DNSresponse()
 
+
     def dns_lookup(self, domain):
         return self.base_dns_lookup(domain,"A")
 
+
     def dns_lookup6(self, domain):
         return self.base_dns_lookup(domain, "AAAA")
+
 
     def dns_lookup_all(self, domain):
         resp_a = self.base_dns_lookup(domain,"A")
         resp_aaaa = self.base_dns_lookup(domain,"AAAA")
         return DNSresponse([*resp_a.response_full,*resp_aaaa.response_full],[*resp_a.answer,*resp_aaaa.answer])
+
 
     def soa_lookup(self, domain):
         soa_answer = self.base_lookup(domain, "SOA")
