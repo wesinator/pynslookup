@@ -3,7 +3,6 @@ import sys
 
 import dns.resolver, dns.exception
 
-stderr = sys.stderr
 
 class DNSresponse:
     """data object for DNS answer
@@ -14,11 +13,12 @@ class DNSresponse:
         self.response_full = response_full
         self.answer = answer
 
+
 class Nslookup:
     """Object for DNS resolver, init with optional specific DNS servers"""
-    def __init__(self, dns_servers=[]):
+    def __init__(self, dns_servers=[], verbose=True):
         self.dns_resolver = dns.resolver.Resolver()
-
+        self.verbose = verbose
         if dns_servers:
             self.dns_resolver.nameservers = dns_servers
 
@@ -38,11 +38,13 @@ class Nslookup:
         except dns.resolver.NoAnswer as e:
             # domains existing but not having AAAA records is common
             if record_type != 'AAAA':
-                print("Warning:", e, file=stderr)
+                print("Warning:", e, file=sys.stderr)
         except dns.resolver.NoNameservers as e:
-            print("Warning:", e, file=stderr)
+            if self.verbose:
+                print("Warning:", e, file=sys.stderr)
         except dns.exception.DNSException as e:
-            print("Error: DNS exception occurred:", e, file=stderr)
+            if self.verbose:
+                print("Error: DNS exception occurred:", e, file=sys.stderr)
 
 
     def base_dns_lookup(self, domain, record_type):
