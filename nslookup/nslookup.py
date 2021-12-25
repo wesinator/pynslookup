@@ -44,7 +44,7 @@ class Nslookup:
                 print("Warning:", e, file=sys.stderr)
         except dns.exception.DNSException as e:
             if self.verbose:
-                print("Error: DNS exception occurred:", e, file=sys.stderr)
+                print("Error: DNS exception occurred looking up '{}':".format(domain), e, file=sys.stderr)
 
 
     def base_dns_lookup(self, domain, record_type):
