@@ -15,7 +15,7 @@ class DNSresponse:
 
 
 class Nslookup:
-    """Object for DNS resolver, init with optional specific DNS servers"""
+    """Object for initializing DNS resolver, with optional specific DNS servers"""
     def __init__(self, dns_servers=[], verbose=True):
         self.dns_resolver = dns.resolver.Resolver()
         self.verbose = verbose
@@ -24,9 +24,7 @@ class Nslookup:
 
 
     def base_lookup(self, domain, record_type):
-        """Get the DNS record, if any, for the given domain.
-        https://github.com/xn-twist/xn-twist/pull/31/files
-        """
+        """Get the DNS record for the given domain and type, handling errors"""
         # set DNS server for lookup
         try:
             # get the dns resolutions for this domain
