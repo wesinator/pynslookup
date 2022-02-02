@@ -17,8 +17,12 @@ from nslookup import Nslookup
 
 domain = "example.com"
 
-# set optional Cloudflare public DNS server
-dns_query = Nslookup(dns_servers=["1.1.1.1"])
+# Initialize Nslookup
+dns_query = Nslookup()
+# Alternatively, the Nslookup constructor supports optional
+# arguments for setting custom dns servers (defaults to system DNS),
+# verbosity (default: True) and using TCP instead of UDP (default: False)
+dns_query = Nslookup(dns_servers=["1.1.1.1"], verbose=False, tcp=False)
 
 ips_record = dns_query.dns_lookup(domain)
 print(ips_record.response_full, ips_record.answer)

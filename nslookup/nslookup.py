@@ -16,9 +16,10 @@ class DNSresponse:
 
 class Nslookup:
     """Object for initializing DNS resolver, with optional specific DNS servers"""
-    def __init__(self, dns_servers=[], verbose=True):
+    def __init__(self, dns_servers=[], verbose=True, tcp=False):
         self.dns_resolver = dns.resolver.Resolver()
         self.verbose = verbose
+        self.tcp = tcp
         if dns_servers:
             self.dns_resolver.nameservers = dns_servers
 
@@ -28,7 +29,7 @@ class Nslookup:
         # set DNS server for lookup
         try:
             # get the dns resolutions for this domain
-            answer = self.dns_resolver.query(domain, record_type)
+            answer = self.dns_resolver.query(domain, record_type, tcp=self.tcp)
             return answer
         except dns.resolver.NXDOMAIN:
             # the domain does not exist so dns resolutions remain empty
