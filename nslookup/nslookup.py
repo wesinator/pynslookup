@@ -20,15 +20,14 @@ class Nslookup:
         self.dns_resolver = dns.resolver.Resolver()
         self.verbose = verbose
         self.tcp = tcp
+        
         if dns_servers:
             self.dns_resolver.nameservers = dns_servers
 
 
     def base_lookup(self, domain, record_type):
         """Get the DNS record for the given domain and type, handling errors"""
-        # set DNS server for lookup
         try:
-            # get the dns resolutions for this domain
             answer = self.dns_resolver.resolve(domain, rdtype=record_type, tcp=self.tcp)
             return answer
         except dns.resolver.NXDOMAIN:
@@ -70,7 +69,7 @@ class Nslookup:
     def dns_lookup_all(self, domain):
         resp_a = self.base_dns_lookup(domain,"A")
         resp_aaaa = self.base_dns_lookup(domain,"AAAA")
-        return DNSresponse([*resp_a.response_full,*resp_aaaa.response_full],[*resp_a.answer,*resp_aaaa.answer])
+        return DNSresponse([*resp_a.response_full,*resp_aaaa.response_full], [*resp_a.answer,*resp_aaaa.answer])
 
 
     def soa_lookup(self, domain):
