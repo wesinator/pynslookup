@@ -29,7 +29,7 @@ class Nslookup:
         # set DNS server for lookup
         try:
             # get the dns resolutions for this domain
-            answer = self.dns_resolver.resolve(domain, record_type, tcp=self.tcp)
+            answer = self.dns_resolver.resolve(domain, rdtype=record_type, tcp=self.tcp)
             return answer
         except dns.resolver.NXDOMAIN:
             # the domain does not exist so dns resolutions remain empty
