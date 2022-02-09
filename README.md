@@ -3,9 +3,16 @@
 
 Simple, sensible high-level DNS lookups in Python (on top of dnspython dns.resolver).
 
-The main purpose and uses of this library:
- - `A` record lookups (typical DNS queries)
- - SOA lookups
+#### Purpose and scope
+This library is a simple wrapper around [dnspython](https://github.com/rthalley/dnspython), 
+to provide high level functions with good error/exception handling, for the most common basic DNS lookup cases.
+
+- `A`, `AAAA` record lookups (typical DNS queries)
+- SOA lookups
+
+This is not intended to be a complete wrapper around dnspython library or to handle uncommon edge cases.
+Features like DoH are out of scope, and should be done using other libraries or dnspython directly.
+
 
 Returns an object containing two arrays:
  - `response_full`: the full DNS response string(s)
