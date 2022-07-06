@@ -13,12 +13,12 @@ to provide high level functions with good error/exception handling, for the most
 This is not intended to be a complete wrapper around dnspython library or to handle uncommon edge cases.
 Features like DoH are out of scope, and should be done using other libraries or dnspython directly.
 
+### Usage
 
 Returns an object containing two arrays:
  - `response_full`: the full DNS response string(s)
  - `answer`: the parsed DNS answer (list of IPs or SOA string)
 
-#### Usage
 ```python
 from nslookup import Nslookup
 
