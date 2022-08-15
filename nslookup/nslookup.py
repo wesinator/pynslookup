@@ -35,7 +35,7 @@ class Nslookup:
             pass
         except dns.resolver.NoAnswer as e:
             # domains existing but not having AAAA records is common
-            if record_type != 'AAAA':
+            if self.verbose and record_type != 'AAAA':
                 print("Warning:", e, file=sys.stderr)
         except dns.resolver.NoNameservers as e:
             if self.verbose:
