@@ -37,3 +37,10 @@ print(ips_record.response_full, ips_record.answer)
 soa_record = dns_query.soa_lookup(domain)
 print(soa_record.response_full, soa_record.answer)
 ```
+
+### Note
+This library is oriented around regular UDP DNS.
+
+Using TCP modes in this simple library will create a separate TCP session for 
+each query, which can be resource intensive for a large number of queries. 
+For this it is recommended to use the more granular `dnspython` API directly.
