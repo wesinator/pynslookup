@@ -19,8 +19,12 @@ class Nslookup:
     def __init__(self, dns_servers=[], verbose=True, tcp=False):
         self.dns_resolver = dns.resolver.Resolver()
         self.verbose = verbose
+
+        if tcp:
+            print("Warning: using TCP mode with multiple requests will open a new session for each request.\n\
+For large number of requests or iterative requests, it may be better to use the granular dnspython dns.query API.", file=sys.stderr)
         self.tcp = tcp
-        
+
         if dns_servers:
             self.dns_resolver.nameservers = dns_servers
 
