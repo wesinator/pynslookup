@@ -73,8 +73,8 @@ For large number of requests or iterative requests, it may be better to use the 
 
 
     def dns_lookup_all(self, domain, include_cname=False):
-        resp_a = self.dns_lookup(domain, include_cname=False)
-        resp_aaaa = self.dns_lookup6(domain, include_cname=False)
+        resp_a = self.dns_lookup(domain, include_cname)
+        resp_aaaa = self.dns_lookup6(domain, include_cname)
         return DNSresponse([*resp_a.response_full,*resp_aaaa.response_full], [*resp_a.answer,*resp_aaaa.answer])
 
 
