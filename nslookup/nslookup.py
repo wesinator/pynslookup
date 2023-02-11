@@ -49,7 +49,7 @@ For large number of requests or iterative requests, it may be better to use the 
                 print("Error: DNS exception occurred looking up '{}':".format(domain), e, file=sys.stderr)
 
 
-    def base_dns_lookup(self, domain, record_type):
+    def dns_host_lookup(self, domain, record_type):
         if record_type in ['A','AAAA']:
             dns_answer = self.base_lookup(domain, record_type)
             if dns_answer:
@@ -63,16 +63,16 @@ For large number of requests or iterative requests, it may be better to use the 
 
 
     def dns_lookup(self, domain):
-        return self.base_dns_lookup(domain,"A")
+        return self.dns_host_lookup(domain,"A")
 
 
     def dns_lookup6(self, domain):
-        return self.base_dns_lookup(domain, "AAAA")
+        return self.dns_host_lookup(domain, "AAAA")
 
 
     def dns_lookup_all(self, domain):
-        resp_a = self.base_dns_lookup(domain,"A")
-        resp_aaaa = self.base_dns_lookup(domain,"AAAA")
+        resp_a = self.dns_host_lookup(domain,"A")
+        resp_aaaa = self.dns_host_lookup(domain,"AAAA")
         return DNSresponse([*resp_a.response_full,*resp_aaaa.response_full], [*resp_a.answer,*resp_aaaa.answer])
 
 
