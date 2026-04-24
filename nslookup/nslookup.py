@@ -21,7 +21,7 @@ class DNSresponse:
 class Nslookup:
     """Object for initializing DNS resolver, with optional specific DNS servers"""
     def __init__(self, dns_servers=[], verbose=True, tcp=False):
-        self.dns_resolver = dns.resolver.Resolver()
+        self.dns_resolver = dns.resolver.Resolver(configure=not bool(dns_servers))
         self.verbose = verbose
 
         if tcp:
