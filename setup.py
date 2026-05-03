@@ -11,7 +11,7 @@ def read_requirements():
 requirements = read_requirements()
 
 setup(name='nslookup',
-      version='1.8.1',
+      version='1.9.0',
       description='Sensible high-level DNS lookups in Python, using DNSpython resolver',
       long_description=readme,
       long_description_content_type='text/markdown',
